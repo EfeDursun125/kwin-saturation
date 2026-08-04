@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# kwin-saturation — adjust the Saturation Boost effect on a running KWin.
+#
+# Usage: kwin-saturation <value>   (e.g. 1.25)
+#   value 1.0 = neutral, >1 = more vibrant, <1 = desaturated
+#
+# Writes the value into kwinrc and asks KWin to reconfigure only this effect,
+# so the change applies immediately without restarting the compositor.
+set -euo pipefail
+
+VALUE="${1:-}"
+if [[ -z "$VALUE" ]]; then
+    echo "usage: kwin-saturation <value>   (e.g. 1.25)" >&2
+    exit 1
+fi
+
+kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" "$VALUE"
+qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect saturationeffect
+echo "saturation set to $VALUE"
