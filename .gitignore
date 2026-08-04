@@ -1,0 +1,11 @@
+# Build artifacts
+build/
+cmake-build-*/
+
+# Editor / OS noise
+*.swp
+*~
+.DS_Store
+.idea/
+.vscode/
+compile_commands.json
