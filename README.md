@@ -1,4 +1,4 @@
-# kwin-saturation
+# KWin Saturation
 
 A KWin 6 native effect that applies a global saturation/vibrance boost across your
 whole desktop, Wayland friendly "vibrance" slider for KDE Plasma. It works
@@ -12,7 +12,7 @@ The effect hooks into KWin's per window paint pass and multiplies the
 saturation of every window through KWin's built-in `WindowPaintData`
 saturation channel, the same mechanism KWin's own effects (e.g.
 `colorblindnesscorrection`) use. It requests to run last in the effect chain
-so it acts as a final color-grade pass.
+so it acts as a final color grade pass.
 
 No custom GLSL is involved, so it stays compatible with the current KWin 6
 rendering pipeline instead of relying on the old `paintScreen` shader stack
@@ -41,7 +41,7 @@ Arch / CachyOS:
 sudo pacman -S kwin extra-cmake-modules cmake qt6-base kconfig
 ```
 
-Debian / Ubuntu / PikaOS (names may vary):
+Debian / Ubuntu / Mint / PikaOS (names may vary):
 
 ```bash
 sudo apt install cmake extra-cmake-modules qt6-base-dev kconfig-dev kwin-dev
@@ -82,7 +82,7 @@ Desktop Effects.
 
 The script writes the value to `kwinrc` and calls
 `org.kde.kwin.Effects.reconfigureEffect`, which reloads just this effect's
-configuration immediately — no restart needed. Alternatively, you can run the
+configuration immediately, no restart needed. Alternatively, you can run the
 two commands it wraps yourself:
 
 ```bash
