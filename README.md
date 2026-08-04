@@ -69,7 +69,7 @@ kwriteconfig6 --file kwinrc --group Plugins --key saturationeffectEnabled true
 qdbus6 org.kde.KWin /KWin org.kde.KWin.reconfigure
 ```
 
-Or toggle "Saturation Boost" in System Settings → Workspace Behavior →
+Or toggle "Saturation Boost" in System Settings → Window Management →
 Desktop Effects.
 
 ## Adjust live
