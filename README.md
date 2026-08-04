@@ -41,6 +41,12 @@ Arch / CachyOS:
 sudo pacman -S kwin extra-cmake-modules cmake qt6-base kconfig
 ```
 
+Fedora:
+
+```bash
+sudo dnf install kwin extra-cmake-modules cmake qt6-qtbase-devel kconfig-devel kwin-devel
+```
+
 Debian / Ubuntu / Mint / PikaOS (names may vary):
 
 ```bash
