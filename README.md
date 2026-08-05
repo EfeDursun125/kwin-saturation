@@ -6,6 +6,26 @@ on any GPU/driver that supports KWin's compositing (AMD, Intel, NVIDIA,
 software rendering), because it runs entirely inside KWin itself. No XRandR
 colour matrix tricks needed (those don't apply on Wayland anyway).
 
+## Get the code
+
+Using git (recommended):
+
+```bash
+git clone https://github.com/EfeDursun125/kwin-saturation.git
+cd kwin-saturation
+```
+
+If you prefer SSH and have an SSH key set up with GitHub:
+
+```bash
+git clone git@github.com:EfeDursun125/kwin-saturation.git
+cd kwin-saturation
+```
+
+No git installed? No problem — click the green "Code" button on the repository
+page and choose "Download ZIP", then extract the archive and open the
+extracted folder.
+
 ## How it works
 
 The effect hooks into KWin's per window paint pass and multiplies the
@@ -71,8 +91,6 @@ sudo apt install cmake extra-cmake-modules qt6-base-dev kconfig-dev kwin-dev
 ## Build and install
 
 ```bash
-git clone https://github.com/EfeDursun125/kwin-saturation
-cd ./kwin-saturation
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build build
 sudo cmake --install build
