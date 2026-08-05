@@ -70,6 +70,28 @@ sudo apt install cmake extra-cmake-modules qt6-base-dev kconfig-dev kwin-dev
 
 ## Build and install
 
+First step: get the source (if you don't already have it)
+
+If you've already cloned or downloaded the repository, skip this step. Otherwise, clone the repo (recommended) or download the ZIP from the green "Code" button and extract it.
+
+Using git (recommended):
+
+```bash
+git clone https://github.com/EfeDursun125/kwin-saturation.git
+cd kwin-saturation
+```
+
+If you prefer SSH and have an SSH key set up with GitHub:
+
+```bash
+git clone git@github.com:EfeDursun125/kwin-saturation.git
+cd kwin-saturation
+```
+
+No git installed? Click the green "Code" button on the repository page, choose "Download ZIP", then extract the archive and open the extracted folder.
+
+Now build and install:
+
 ```bash
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build build
