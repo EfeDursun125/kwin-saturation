@@ -71,6 +71,8 @@ sudo apt install cmake extra-cmake-modules qt6-base-dev kconfig-dev kwin-dev
 ## Build and install
 
 ```bash
+git clone https://github.com/EfeDursun125/kwin-saturation
+cd ./kwin-saturation
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr
 cmake --build build
 sudo cmake --install build
