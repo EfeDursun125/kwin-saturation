@@ -10,7 +10,9 @@ set -euo pipefail
 
 VALUE="${1:-}"
 if [[ -z "$VALUE" ]]; then
-    echo "usage: kwin-saturation <value>   (e.g. 1.25)" >&2
+    CURRENT=$(kreadconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" --default "1.0")
+    echo "current saturation: $CURRENT"
+    echo "usage: kwin-saturation <value> (e.g. 1.25)" >&2
     exit 1
 fi
 
