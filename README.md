@@ -105,11 +105,13 @@ Then restart KWin once so it picks up the new plugin
 qdbus6 org.kde.KWin /KWin org.kde.KWin.replace
 ```
 
-## Enable
+## Enable and move
 
 ```bash
 kwriteconfig6 --file kwinrc --group Plugins --key saturationeffectEnabled true
 qdbus6 org.kde.KWin /KWin org.kde.KWin.reconfigure
+sudo mv kwin-saturation /usr/local/bin/kwin-saturation
+sudo chmod +x /usr/local/bin/kwin-saturation
 ```
 
 Or toggle "Saturation Boost" in System Settings → Window Management →
