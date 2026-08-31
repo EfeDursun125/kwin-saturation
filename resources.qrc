@@ -1,0 +1,5 @@
+<RCC>
+	<qresource prefix="/">
+		<file>kwin-saturation.svg</file>
+	</qresource>
+</RCC>

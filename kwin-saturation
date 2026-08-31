@@ -10,12 +10,13 @@ set -euo pipefail
 
 VALUE="${1:-}"
 if [[ -z "$VALUE" ]]; then
-    CURRENT=$(kreadconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" --default "1.0")
-    echo "current saturation: $CURRENT"
-    echo "usage: kwin-saturation <value> (e.g. 1.25)" >&2
-    exit 1
+	CURRENT=$(kreadconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" --default "1.0")
+	echo "current saturation: $CURRENT"
+	echo "usage: kwin-saturation <value> (e.g. 1.25)" >&2
+	exit 1
 fi
 
+kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Enabled" "true"
 kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" "$VALUE"
 qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect saturationeffect
 echo "saturation set to $VALUE"

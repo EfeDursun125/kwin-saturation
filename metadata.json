@@ -1,22 +1,22 @@
 {
-    "KPlugin": {
-        "Authors": [
-            {
-                "Name": "EfeDursun125"
-            }
-        ],
-        "Category": "Appearance",
-        "Description": "System-wide saturation/vibrance boost for KWin",
-        "Description[tr]": "KWin için sistem genelinde doygunluk/canlılık artırma",
-        "Icon": "preferences-desktop-color",
-        "Id": "saturationeffect",
-        "License": "GPL-3.0-or-later",
-        "Name": "Saturation Boost",
-        "Name[tr]": "Doygunluk Artırma",
-        "ServiceTypes": [
-            "KWin/Effect"
-        ],
-        "Version": "1.0.0"
-    },
-    "X-KWin-Exclusive": false
+	"KPlugin": {
+		"Authors": [
+			{
+				"Name": "EfeDursun125"
+			}
+		],
+		"Category": "Appearance",
+		"Description": "System-wide saturation/vibrance boost for KWin",
+		"Description[tr]": "KWin için sistem genelinde doygunluk/canlılık artırma",
+		"Icon": "preferences-desktop-color",
+		"Id": "saturationeffect",
+		"License": "GPL-3.0-or-later",
+		"Name": "Saturation Boost",
+		"Name[tr]": "Doygunluk Artırma",
+		"ServiceTypes": [
+			"KWin/Effect"
+		],
+		"Version": "1.0.0"
+	},
+	"X-KWin-Exclusive": false
 }

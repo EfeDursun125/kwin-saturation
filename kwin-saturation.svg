@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+	<linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+	  <stop offset="0%" stop-color="#1e1e24"/>
+	  <stop offset="100%" stop-color="#121214"/>
+	</linearGradient>
+	<linearGradient id="vibranceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+	  <stop offset="0%" stop-color="#ff0055"/>
+	  <stop offset="25%" stop-color="#ff9100"/>
+	  <stop offset="50%" stop-color="#00e676"/>
+	  <stop offset="75%" stop-color="#00b0ff"/>
+	  <stop offset="100%" stop-color="#d500f9"/>
+	</linearGradient>
+	<linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+	  <stop offset="0%" stop-color="#00e676"/>
+	  <stop offset="100%" stop-color="#00b0ff"/>
+	</linearGradient>
+	<filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
+	  <feGaussianBlur stdDeviation="10" result="blur"/>
+	  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+	</filter>
+  </defs>
+  
+  <!-- Background Card -->
+  <rect x="16" y="16" width="224" height="224" rx="52" fill="url(#bgGrad)" stroke="#3a3d4d" stroke-width="4"/>
+  
+  <!-- Outer Glow Ring with Soft Blur Shadow -->
+  <circle cx="128" cy="128" r="72" stroke="url(#vibranceGrad)" stroke-width="18" stroke-linecap="round" filter="url(#glowEffect)" opacity="0.95"/>
+  <circle cx="128" cy="128" r="72" stroke="url(#vibranceGrad)" stroke-width="16" stroke-linecap="round"/>
+  
+  <!-- Center Glowing Vibrance Core -->
+  <circle cx="128" cy="128" r="34" fill="url(#sunGrad)" filter="url(#glowEffect)"/>
+  <circle cx="128" cy="128" r="30" fill="url(#sunGrad)"/>
+</svg>

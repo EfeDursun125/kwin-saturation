@@ -1,7 +1,7 @@
 /*
-    SPDX-FileCopyrightText: 2026 EfeDursun125
+	SPDX-FileCopyrightText: 2026 EfeDursun125
 
-    SPDX-License-Identifier: GPL-3.0-or-later
+	SPDX-License-Identifier: GPL-3.0-or-later
 */
 
 #include "saturationeffect.h"

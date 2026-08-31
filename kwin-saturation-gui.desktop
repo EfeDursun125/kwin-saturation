@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Digital Vibrance
+GenericName=KWin Desktop Saturation
+Comment=Adjust screen saturation and digital vibrance in real-time
+Exec=kwin-saturation-gui
+Icon=/usr/share/icons/hicolor/scalable/apps/kwin-saturation.svg
+Terminal=false
+Categories=Settings;DesktopSettings;Utility;Qt;KDE;
+Keywords=saturation;vibrance;digital vibrance;color;kwin;display;nvidia;
+StartupNotify=true
+X-KDE-SubstituteUID=false

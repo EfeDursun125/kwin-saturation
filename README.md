@@ -45,21 +45,21 @@ Fedora 40+:
 
 ```bash
 sudo dnf install \
-    kwin-devel \
-    extra-cmake-modules \
-    cmake \
-    qt6-qtbase-devel \
-    kf6-kconfig-devel
+	kwin-devel \
+	extra-cmake-modules \
+	cmake \
+	qt6-qtbase-devel \
+	kf6-kconfig-devel
 ```
 
 Optional extras (may be required depending on distro packaging):
 
 ```bash
 sudo dnf install \
-    kf6-coreaddons-devel \
-    kf6-windowssystem-devel \
-    kf6-i18n-devel \
-    qt6-qttools-devel
+	kf6-coreaddons-devel \
+	kf6-windowssystem-devel \
+	kf6-i18n-devel \
+	qt6-qttools-devel
 ```
 
 Debian / Ubuntu / Mint / PikaOS (names may vary):
@@ -125,6 +125,24 @@ Desktop Effects.
 ./kwin-saturation 0.75  # desaturated
 ```
 
+### Digital Vibrance GUI (C++ / Qt6)
+
+The project includes a native C++ / Qt6 desktop control panel (`kwin-saturation-gui`) inspired by NVIDIA Digital Vibrance:
+
+```bash
+kwin-saturation-gui
+```
+
+- **Features**:
+  - **Live Dynamic Preview**: Real-time D-Bus & KConfig communication with zero latency.
+  - **Visual Indicator**: Large digital percentage display (e.g. `125%` or `1.25x`) with dynamic preset descriptions (Esports, Cinema, Vivid, Grayscale).
+  - **Quick Presets Grid**: One-click switching between Default (100%), Cinema (115%), Esports (140%), Vivid (175%), Ultra (200%), and Mono (0%).
+  - **Direct Effect Toggle**: Enable or disable the KWin effect on the fly.
+  - **Desktop Shortcut**: Automatically adds a launcher to your **Desktop** and Application Menu (`Digital Vibrance`).
+
+
+
+
 The script writes the value to `kwinrc` and calls
 `org.kde.kwin.Effects.reconfigureEffect`, which reloads just this effect's
 configuration immediately, no restart needed. Alternatively, you can run the
@@ -139,7 +157,7 @@ The default value is `1.25`; `1.0` leaves colors untouched.
 
 ## Configuration
 
-| Key          | Group                    | Default | Meaning                        |
+| Key		  | Group					| Default | Meaning						|
 |--------------|--------------------------|---------|--------------------------------|
 | `Saturation` | `Effect-saturationeffect`| `1.25`   | Saturation multiplier (`>1` boost, `<1` desaturate) |
 
