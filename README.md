@@ -1,7 +1,18 @@
-# KWin Saturation <img src="./kwin-saturation.svg" width="32" height="32" alt="KWin Saturation" />
+<table>
+  <tr>
+    <td>
+      <img src="./kwin-saturation.svg" width="128" height="128" alt="KWin Saturation" />
+    </td>
+    <td>
+      
+# KWin Saturation
 
-A KWin 6 native effect that applies a global saturation/vibrance boost across your
-whole desktop, Wayland friendly "vibrance" slider for KDE Plasma. It works
+A KWin 6 native effect that applies a global saturation/vibrance boost...
+    </td>
+  </tr>
+</table>
+
+Wayland friendly "vibrance" slider for KDE Plasma. It works
 on any GPU/driver that supports KWin's compositing (AMD, Intel, NVIDIA,
 software rendering), because it runs entirely inside KWin itself. No XRandR
 colour matrix tricks needed (those don't apply on Wayland anyway).
