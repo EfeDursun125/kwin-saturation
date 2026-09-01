@@ -12,7 +12,7 @@ A KWin 6 native effect that applies a global saturation/vibrance boost...
   </tr>
 </table>
 
-Wayland friendly "vibrance" slider for KDE Plasma. It works
+Easy with GUI, Wayland friendly "vibrance" slider for KDE Plasma. It works
 on any GPU/driver that supports KWin's compositing (AMD, Intel, NVIDIA,
 software rendering), because it runs entirely inside KWin itself. No XRandR
 colour matrix tricks needed (those don't apply on Wayland anyway).
