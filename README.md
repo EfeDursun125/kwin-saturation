@@ -138,7 +138,7 @@ Desktop Effects.
 
 ### Digital Vibrance GUI (C++ / Qt6)
 
-The project includes a native C++ / Qt6 desktop control panel (`kwin-saturation-gui`) inspired by NVIDIA Digital Vibrance:
+The project includes a native C++ / Qt6 desktop control panel (`kwin-saturation-gui`) inspired idea by NVIDIA's app on X11:
 
 ```bash
 kwin-saturation-gui
