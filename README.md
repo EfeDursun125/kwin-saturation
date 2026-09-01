@@ -1,4 +1,4 @@
-# KWin Saturation
+# KWin Saturation <img src="./kwin-saturation.svg" width="32" height="32" alt="KWin Saturation" />
 
 A KWin 6 native effect that applies a global saturation/vibrance boost across your
 whole desktop, Wayland friendly "vibrance" slider for KDE Plasma. It works
