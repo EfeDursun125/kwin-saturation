@@ -130,31 +130,34 @@ Desktop Effects.
 
 ## Adjust live
 
+From terminal:
+
 ```bash
 ./kwin-saturation 1.25  # more vibrant
 ./kwin-saturation 1.0   # neutral / off
 ./kwin-saturation 0.75  # desaturated
 ```
 
+The default value is `1.25`; `1.0` leaves colors untouched.
+
 ### Digital Vibrance GUI (C++ / Qt6)
 
-The project includes a native C++ / Qt6 desktop control panel (`kwin-saturation-gui`) inspired idea by NVIDIA's app on X11:
+The project includes a native C++ / Qt6 desktop control panel (`kwin-saturation-gui`):
 
 ```bash
-kwin-saturation-gui
+kwin-saturation-gui # easiest if you want gui
 ```
 
-- **Features**:
+- **GUI Features**:
   - **Live Dynamic Preview**: Real-time D-Bus & KConfig communication with zero latency.
   - **Visual Indicator**: Large digital percentage display (e.g. `125%` or `1.25x`) with dynamic preset descriptions (Esports, Cinema, Vivid, Grayscale).
   - **Quick Presets Grid**: One-click switching between Default (100%), Cinema (115%), Esports (140%), Vivid (175%), Ultra (200%), and Mono (0%).
   - **Direct Effect Toggle**: Enable or disable the KWin effect on the fly.
   - **Desktop Shortcut**: Automatically adds a launcher to your **Desktop** and Application Menu (`Digital Vibrance`).
 
+## Configuration
 
-
-
-The script writes the value to `kwinrc` and calls
+The kwin-saturation script writes the value to `kwinrc` and calls
 `org.kde.kwin.Effects.reconfigureEffect`, which reloads just this effect's
 configuration immediately, no restart needed. Alternatively, you can run the
 two commands it wraps yourself:
@@ -163,10 +166,6 @@ two commands it wraps yourself:
 kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" 1.6
 qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect saturationeffect
 ```
-
-The default value is `1.25`; `1.0` leaves colors untouched.
-
-## Configuration
 
 | Key		  | Group					| Default | Meaning						|
 |--------------|--------------------------|---------|--------------------------------|
