@@ -21,15 +21,8 @@
 	  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
 	</filter>
   </defs>
-  
-  <!-- Background Card -->
+
   <rect x="16" y="16" width="224" height="224" rx="52" fill="url(#bgGrad)" stroke="#3a3d4d" stroke-width="4"/>
-  
-  <!-- Outer Glow Ring with Soft Blur Shadow -->
   <circle cx="128" cy="128" r="72" stroke="url(#vibranceGrad)" stroke-width="18" stroke-linecap="round" filter="url(#glowEffect)" opacity="0.95"/>
   <circle cx="128" cy="128" r="72" stroke="url(#vibranceGrad)" stroke-width="16" stroke-linecap="round"/>
-  
-  <!-- Center Glowing Vibrance Core -->
-  <circle cx="128" cy="128" r="34" fill="url(#sunGrad)" filter="url(#glowEffect)"/>
-  <circle cx="128" cy="128" r="30" fill="url(#sunGrad)"/>
 </svg>
