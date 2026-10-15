@@ -16,7 +16,19 @@ if [[ -z "$VALUE" ]]; then
 	exit 1
 fi
 
+QDBUS=''
+for candidate in qdbus6 qdbus-qt6 /usr/lib/qt6/bin/qdbus /usr/lib64/qt6/bin/qdbus; do
+	if command -v "$candidate" >/dev/null 2>&1; then
+		QDBUS="$candidate"
+		break
+	fi
+done
+if [[ -z "$QDBUS" ]]; then
+	echo "Qt 6 qdbus was not found. Install qt6-tools (Arch), qdbus-qt6 (Debian/Ubuntu), or qt6-qttools (Fedora)." >&2
+	exit 1
+fi
+
 kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Enabled" "true"
 kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" "$VALUE"
-qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect saturationeffect
+"$QDBUS" org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect saturationeffect
 echo "saturation set to $VALUE"
