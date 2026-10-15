@@ -22,7 +22,8 @@ include(KDECMakeSettings)
 find_package(Qt6 6.0 REQUIRED COMPONENTS Core Gui Widgets DBus Svg Network)
 find_package(KF6Config REQUIRED)
 
-# kwin development headers/CMake config
+# KWin development headers/CMake config and transitive dependencies.
+# On Arch/CachyOS, KWin's Vulkan dependency check requires vulkan-headers.
 find_package(KWin REQUIRED)
 
 add_library(saturationeffect MODULE
@@ -64,6 +65,10 @@ target_link_libraries(kwin-saturation-gui
 
 # Install executable
 install(TARGETS kwin-saturation-gui
+	DESTINATION ${KDE_INSTALL_BINDIR}
+)
+
+install(PROGRAMS kwin-saturation
 	DESTINATION ${KDE_INSTALL_BINDIR}
 )
 
