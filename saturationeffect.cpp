@@ -45,7 +45,7 @@ bool SaturationEffect::isActive() const
 	return !qFuzzyCompare(m_saturation, 1.0f);
 }
 
-void SaturationEffect::drawWindow(const RenderTarget &renderTarget,
+bool SaturationEffect::drawWindow(const RenderTarget &renderTarget,
 								  const RenderViewport &viewport,
 								  EffectWindow *w,
 								  int mask,
@@ -53,7 +53,7 @@ void SaturationEffect::drawWindow(const RenderTarget &renderTarget,
 								  WindowPaintData &data)
 {
 	data.multiplySaturation(m_saturation);
-	effects->drawWindow(renderTarget, viewport, w, mask, region, data);
+	return effects->drawWindow(renderTarget, viewport, w, mask, region, data);
 }
 
 } // namespace KWin
