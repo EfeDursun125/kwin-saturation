@@ -25,7 +25,7 @@ public:
 	static bool supported();
 
 	void reconfigure(ReconfigureFlags flags) override;
-	void drawWindow(const RenderTarget &renderTarget,
+	bool drawWindow(const RenderTarget &renderTarget,
 					const RenderViewport &viewport,
 					EffectWindow *w,
 					int mask,
