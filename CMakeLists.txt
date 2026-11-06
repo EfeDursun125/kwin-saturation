@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
 set(QT_MAJOR_VERSION 6)
 set(QT_DEFAULT_MAJOR_VERSION 6)
@@ -49,6 +50,10 @@ install(TARGETS saturationeffect
 
 add_executable(kwin-saturation-gui
 	gui_main.cpp
+	gui_window.cpp
+	application_theme.cpp
+	saturation_window.ui
+	effect_status_monitor.cpp
 	resources.qrc
 )
 
@@ -62,6 +67,25 @@ target_link_libraries(kwin-saturation-gui
 		Qt6::Network
 		KF6::ConfigCore
 )
+
+option(BUILD_TESTING "Build effect status tests" OFF)
+if(BUILD_TESTING)
+	find_package(Qt6 REQUIRED COMPONENTS Test)
+	find_program(DBUS_RUN_SESSION dbus-run-session)
+	if(NOT DBUS_RUN_SESSION)
+		message(FATAL_ERROR "dbus-run-session is required to run the effect status tests")
+	endif()
+	enable_testing()
+	add_executable(effect-status-test tests/effect_status_monitor_test.cpp effect_status_monitor.cpp)
+	target_include_directories(effect-status-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+	target_link_libraries(effect-status-test PRIVATE Qt6::Test Qt6::DBus)
+	add_test(NAME effect-status COMMAND ${DBUS_RUN_SESSION} -- $<TARGET_FILE:effect-status-test>)
+	add_executable(gui-window-test tests/gui_window_test.cpp gui_window.cpp application_theme.cpp effect_status_monitor.cpp resources.qrc)
+	target_include_directories(gui-window-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+	target_link_libraries(gui-window-test PRIVATE Qt6::Test Qt6::Widgets Qt6::DBus Qt6::Svg Qt6::Network KF6::ConfigCore)
+	add_test(NAME gui-window COMMAND ${DBUS_RUN_SESSION} -- $<TARGET_FILE:gui-window-test>)
+	set_tests_properties(gui-window PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+endif()
 
 # Install executable
 install(TARGETS kwin-saturation-gui

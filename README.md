@@ -126,6 +126,13 @@ kwin-saturation-gui
 
 Use the slider for live adjustments, select a preset, or toggle the effect.
 The system tray menu also provides quick presets and an enable/disable action.
+The color strip provides a reference affected by the desktop effect. The chosen
+preset is highlighted, and pausing the effect preserves your selected value.
+Closing the window keeps the app in the tray when available; **Ctrl+Q** quits.
+The panel follows KDE colors, including Matugen/Material 3 schemes exported to
+`kdeglobals`, and updates when the system palette changes. It uses a configured
+Qt palette when KDE colors are unavailable, then a warm dark palette as a fallback.
+Grayscale is the first preset in both the panel and the tray menu.
 
 ### Command line
 
@@ -175,6 +182,12 @@ enabled in Desktop Effects and that the GUI's effect toggle is on.
 
 **The effect stops working after a KWin update**
 
+The GUI checks whether KWin has loaded the plugin. If the plugin is missing,
+unsupported, or cannot be loaded, it displays an explanation, hides the effect
+controls, and disables tray presets. Use **Check again** to retry loading
+after fixing the problem. Status is refreshed automatically every five seconds
+and when KWin restarts. A neutral saturation value is still a valid loaded effect.
+
 Rebuild and reinstall against the updated KWin development packages, then
 log out and log back in. KWin effect APIs can change between versions.
 
@@ -196,6 +209,8 @@ not included in the manifest. Log out and log back in after uninstalling.
 Build dependencies and saved `kwinrc` preferences are kept.
 
 ## License
+
+Copyright (C) 2026 EfeDursun125.
 
 [GPL-3.0-or-later](LICENSE).
 

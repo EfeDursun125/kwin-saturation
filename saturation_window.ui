@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SaturationWindow</class>
+ <widget class="QWidget" name="SaturationWindow">
+  <property name="windowTitle"><string>Digital Vibrance</string></property>
+  <property name="minimumSize"><size><width>500</width><height>0</height></size></property>
+  <layout class="QVBoxLayout" name="rootLayout">
+   <property name="spacing"><number>22</number></property>
+   <property name="leftMargin"><number>28</number></property>
+   <property name="topMargin"><number>26</number></property>
+   <property name="rightMargin"><number>28</number></property>
+   <property name="bottomMargin"><number>24</number></property>
+   <item><layout class="QHBoxLayout" name="headerLayout">
+    <item><layout class="QVBoxLayout" name="titleLayout">
+     <property name="spacing"><number>5</number></property>
+     <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Saturation</string></property></widget></item>
+     <item><widget class="QLabel" name="subtitleLabel"><property name="text"><string>KWin desktop effect</string></property></widget></item>
+    </layout></item>
+    <item><spacer name="headerSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>0</height></size></property></spacer></item>
+    <item><widget class="QLabel" name="statusBadge"><property name="text"><string>Checking…</string></property></widget></item>
+   </layout></item>
+   <item><widget class="QFrame" name="separator"><property name="frameShape"><enum>QFrame::HLine</enum></property></widget></item>
+   <item><widget class="QWidget" name="statusPanel" native="true">
+    <layout class="QVBoxLayout" name="statusLayout">
+     <property name="spacing"><number>12</number></property>
+     <property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property><property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property>
+     <item><widget class="QLabel" name="errorTitle"><property name="text"><string>Checking the effect</string></property></widget></item>
+     <item><widget class="QLabel" name="effectNotice"><property name="text"><string>Waiting for KWin to report the plugin status.</string></property><property name="textFormat"><enum>Qt::PlainText</enum></property><property name="wordWrap"><bool>true</bool></property></widget></item>
+     <item><layout class="QHBoxLayout" name="retryLayout">
+      <item><widget class="QPushButton" name="retryEffectButton"><property name="text"><string>Check again</string></property></widget></item>
+      <item><spacer name="retrySpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>0</height></size></property></spacer></item>
+     </layout></item>
+    </layout>
+   </widget></item>
+   <item><widget class="QWidget" name="controls" native="true">
+    <layout class="QVBoxLayout" name="controlsLayout">
+     <property name="spacing"><number>20</number></property>
+     <property name="leftMargin"><number>0</number></property><property name="topMargin"><number>0</number></property><property name="rightMargin"><number>0</number></property><property name="bottomMargin"><number>0</number></property>
+     <item><layout class="QHBoxLayout" name="readoutLayout">
+      <item><layout class="QVBoxLayout" name="valueLayout">
+       <property name="spacing"><number>0</number></property>
+       <item><widget class="QLabel" name="percentageLabel"><property name="text"><string>125%</string></property></widget></item>
+       <item><widget class="QLabel" name="descriptionLabel"><property name="text"><string>1.25 × original saturation</string></property></widget></item>
+      </layout></item>
+      <item><spacer name="valueSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>0</height></size></property></spacer></item>
+      <item><widget class="EffectToggle" name="enableCheckBox"><property name="text"><string>Enable effect</string></property><property name="checked"><bool>true</bool></property></widget></item>
+     </layout></item>
+     <item><widget class="ColorReference" name="colorReference" native="true"/></item>
+     <item><layout class="QVBoxLayout" name="sliderLayout">
+      <property name="spacing"><number>8</number></property>
+      <item><layout class="QHBoxLayout" name="sliderRow">
+       <property name="spacing"><number>12</number></property>
+       <item><widget class="QPushButton" name="decreaseButton"><property name="text"><string>−</string></property><property name="accessibleName"><string>Decrease saturation</string></property><property name="toolTip"><string>Decrease by 5%</string></property></widget></item>
+       <item><widget class="QSlider" name="vibranceSlider"><property name="maximum"><number>50</number></property><property name="pageStep"><number>5</number></property><property name="value"><number>25</number></property><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="accessibleName"><string>Desktop saturation</string></property></widget></item>
+       <item><widget class="QPushButton" name="increaseButton"><property name="text"><string>+</string></property><property name="accessibleName"><string>Increase saturation</string></property><property name="toolTip"><string>Increase by 5%</string></property></widget></item>
+      </layout></item>
+      <item><layout class="QHBoxLayout" name="scaleLayout">
+       <property name="leftMargin"><number>44</number></property><property name="rightMargin"><number>44</number></property>
+       <item><widget class="QLabel" name="minimumLabel"><property name="text"><string>0%</string></property></widget></item>
+       <item><spacer name="scaleSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>0</height></size></property></spacer></item>
+       <item><widget class="QLabel" name="maximumLabel"><property name="text"><string>250%</string></property></widget></item>
+      </layout></item>
+     </layout></item>
+     <item><layout class="QVBoxLayout" name="presetsLayout">
+      <property name="spacing"><number>10</number></property>
+      <item><widget class="QLabel" name="presetsLabel"><property name="text"><string>Presets</string></property></widget></item>
+      <item><layout class="QGridLayout" name="presetsGrid">
+       <property name="spacing"><number>8</number></property>
+       <item row="0" column="0"><widget class="QPushButton" name="grayscalePreset"><property name="text"><string>Grayscale · 0%</string></property><property name="checkable"><bool>true</bool></property></widget></item>
+       <item row="0" column="1"><widget class="QPushButton" name="originalPreset"><property name="text"><string>Original · 100%</string></property><property name="checkable"><bool>true</bool></property></widget></item>
+       <item row="0" column="2"><widget class="QPushButton" name="cinemaPreset"><property name="text"><string>Cinema · 115%</string></property><property name="checkable"><bool>true</bool></property></widget></item>
+       <item row="1" column="0"><widget class="QPushButton" name="boostPreset"><property name="text"><string>Boost · 140%</string></property><property name="checkable"><bool>true</bool></property></widget></item>
+       <item row="1" column="1"><widget class="QPushButton" name="vividPreset"><property name="text"><string>Vivid · 175%</string></property><property name="checkable"><bool>true</bool></property></widget></item>
+       <item row="1" column="2"><widget class="QPushButton" name="strongPreset"><property name="text"><string>Strong · 200%</string></property><property name="checkable"><bool>true</bool></property></widget></item>
+      </layout></item>
+     </layout></item>
+     <item><widget class="QLabel" name="footerLabel"><property name="text"><string>100% preserves the original colors.</string></property></widget></item>
+    </layout>
+   </widget></item>
+  </layout>
+ </widget>
+ <customwidgets><customwidget><class>EffectToggle</class><extends>QCheckBox</extends><header>effect_toggle.h</header></customwidget><customwidget><class>ColorReference</class><extends>QWidget</extends><header>color_reference.h</header><container>1</container></customwidget></customwidgets>
+ <resources/>
+ <connections/>
+</ui>

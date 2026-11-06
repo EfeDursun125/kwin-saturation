@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-	<linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-	  <stop offset="0%" stop-color="#1e1e24"/>
-	  <stop offset="100%" stop-color="#121214"/>
-	</linearGradient>
-	<linearGradient id="vibranceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-	  <stop offset="0%" stop-color="#ff0055"/>
-	  <stop offset="25%" stop-color="#ff9100"/>
-	  <stop offset="50%" stop-color="#00e676"/>
-	  <stop offset="75%" stop-color="#00b0ff"/>
-	  <stop offset="100%" stop-color="#d500f9"/>
-	</linearGradient>
-	<linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-	  <stop offset="0%" stop-color="#00e676"/>
-	  <stop offset="100%" stop-color="#00b0ff"/>
-	</linearGradient>
-	<filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
-	  <feGaussianBlur stdDeviation="10" result="blur"/>
-	  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-	</filter>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title description">
+  <title id="title">KWin Saturation</title>
+  <desc id="description">A dial with neutral tones on the left and colors on the right, with a centered saturation slider inside the dial.</desc>
 
-  <rect x="16" y="16" width="224" height="224" rx="52" fill="url(#bgGrad)" stroke="#3a3d4d" stroke-width="4"/>
-  <circle cx="128" cy="128" r="72" stroke="url(#vibranceGrad)" stroke-width="18" stroke-linecap="round" filter="url(#glowEffect)" opacity="0.95"/>
-  <circle cx="128" cy="128" r="72" stroke="url(#vibranceGrad)" stroke-width="16" stroke-linecap="round"/>
+  <rect x="16" y="16" width="224" height="224" rx="48" fill="#1c1e20"/>
+  <rect x="17" y="17" width="222" height="222" rx="47" stroke="#414647" stroke-width="2"/>
+
+  <g stroke-width="24">
+    <path d="M128 56a72 72 0 0 1 62.354 36" stroke="#d99b64"/>
+    <path d="M190.354 92a72 72 0 0 1 0 72" stroke="#83b49c"/>
+    <path d="M190.354 164A72 72 0 0 1 128 200" stroke="#839fbe"/>
+    <path d="M128 200a72 72 0 0 1-62.354-36" stroke="#69716d"/>
+    <path d="M65.646 164a72 72 0 0 1 0-72" stroke="#a0a69e"/>
+    <path d="M65.646 92A72 72 0 0 1 128 56" stroke="#dedbd2"/>
+  </g>
+
+  <path d="M92 128h72" stroke="#59635d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M92 128h36" stroke="#d8b56e" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="12" fill="#e8e5df" stroke="#1c1e20" stroke-width="4"/>
 </svg>
