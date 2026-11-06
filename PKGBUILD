@@ -23,7 +23,7 @@ makedepends=(
     'vulkan-headers'
 )
 
-_commit=b2636fa2dbde31e795c0603f18d91d05dcdcf832
+_commit=a65e2f92acea6a6dee082850e6e9a746210369b0
 source=("$pkgname::git+$url.git#commit=$_commit")
 sha256sums=('SKIP')
 conflicts=('kwin-saturation-git')
