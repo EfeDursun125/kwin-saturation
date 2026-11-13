@@ -40,6 +40,25 @@ trap 'printf "Installation stopped at line %s. Fix the error above and rerun the
 source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 build_dir="$source_dir/build-autoinstall"
 [[ -f "$source_dir/CMakeLists.txt" ]] || die 'Keep this script in the project source directory.'
+
+# Update from the configured upstream branch when Git and the remote are available.
+# --ff-only prevents an automatic merge if the local branch has diverged.
+if command -v git >/dev/null 2>&1 && git -C "$source_dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    if upstream=$(git -C "$source_dir" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null); then
+        upstream_remote=${upstream%%/*}
+        if git -C "$source_dir" ls-remote --exit-code "$upstream_remote" HEAD >/dev/null 2>&1; then
+            printf 'Checking for source updates...\n'
+            run git -C "$source_dir" pull --ff-only
+        else
+            printf 'Git remote is unavailable; continuing without updating the source.\n' >&2
+        fi
+    else
+        printf 'No Git upstream is configured; continuing without updating the source.\n' >&2
+    fi
+else
+    printf 'Git is unavailable or this is not a Git checkout; continuing without updating the source.\n' >&2
+fi
+
 [[ -r /etc/os-release ]] || die 'Cannot detect this distribution: /etc/os-release is missing.'
 # shellcheck source=/etc/os-release
 . /etc/os-release
