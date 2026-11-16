@@ -3,7 +3,9 @@
  <class>SaturationWindow</class>
  <widget class="QWidget" name="SaturationWindow">
   <property name="windowTitle"><string>Digital Vibrance</string></property>
-  <property name="minimumSize"><size><width>500</width><height>0</height></size></property>
+  <property name="minimumSize"><size><width>560</width><height>540</height></size></property>
+  <property name="maximumSize"><size><width>560</width><height>540</height></size></property>
+
   <layout class="QVBoxLayout" name="rootLayout">
    <property name="spacing"><number>22</number></property>
    <property name="leftMargin"><number>28</number></property>
