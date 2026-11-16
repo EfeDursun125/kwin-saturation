@@ -59,6 +59,7 @@ DigitalVibranceWindow::DigitalVibranceWindow(QWidget *parent)
 	}
 
 	m_ui->setupUi(this);
+	setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	setWindowIcon(QIcon(QStringLiteral(":/kwin-saturation.svg")));
 	connect(&m_theme, &ApplicationTheme::colorsChanged, this, &DigitalVibranceWindow::applyTheme);
 	applyTheme();
@@ -108,7 +109,6 @@ DigitalVibranceWindow::DigitalVibranceWindow(QWidget *parent)
 	m_effectMonitor.setEffectEnabled(m_isEffectEnabled);
 	updateUIState();
 	m_effectMonitor.refresh(true);
-	adjustSize();
 	if (const QScreen *const screen = QGuiApplication::primaryScreen())
 		move(screen->availableGeometry().center() - rect().center());
 }
@@ -139,6 +139,8 @@ void DigitalVibranceWindow::applyTheme()
 		"QSlider::sub-page:horizontal { background: palette(highlight); border-radius: 2px; }"
 		"QSlider::handle:horizontal { width: 14px; margin: -6px 0; background: palette(highlight); border: 1px solid palette(window); border-radius: 7px; }"
 		"QSlider::handle:horizontal:hover, QSlider::handle:horizontal:focus { background: palette(window-text); }"
+		"QWidget:focus { outline: none; }"
+		"QLabel:focus, QCheckBox:focus, QPushButton:focus, QSlider:focus, QMenu:focus { outline: none; }"
 	).arg(m_theme.colors().color(QPalette::PlaceholderText).name());
 	struct ColorToken
 	{
