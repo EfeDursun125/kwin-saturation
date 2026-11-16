@@ -55,11 +55,5 @@ protected:
 		painter.drawEllipse(QPointF(isChecked() ? track.right() - 12 : track.left() + 12,
 			track.center().y()), 8, 8);
 
-		if (hasFocus())
-		{
-			painter.setBrush(Qt::NoBrush);
-			painter.setPen(QPen(palette().color(QPalette::Highlight), 1));
-			painter.drawRoundedRect(QRectF(rect()).adjusted(1, 1, -1, -1), 5, 5);
-		}
 	}
 };
