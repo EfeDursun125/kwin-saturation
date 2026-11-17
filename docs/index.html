@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1c1e20">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="KWin Saturation adds digital vibrance and desktop saturation control to KDE Plasma 6 on Wayland. Free native KWin effect with Qt 6 controls and presets.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://efedursun125.github.io/kwin-saturation/">
+  <meta property="og:title" content="KWin Saturation | Digital Vibrance for KDE Plasma 6">
+  <meta property="og:description" content="Adjust KDE Plasma 6 desktop saturation from 0% to 250% with a native KWin effect and Qt 6 control panel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://efedursun125.github.io/kwin-saturation/">
+  <meta property="og:site_name" content="KWin Saturation">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="KWin Saturation | KDE Plasma 6">
+  <meta name="twitter:description" content="Digital vibrance and saturation controls for KDE Plasma 6.">
+  <link rel="icon" type="image/svg+xml" href="./kwin-saturation.svg">
+  <title>KWin Saturation | Digital Vibrance for KDE Plasma 6</title>
+  <script>
+    try {
+      if (localStorage.getItem('kwin-site-theme-v2') === 'white') {
+        document.documentElement.dataset.theme = 'white';
+      }
+    } catch {}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "KWin Saturation",
+    "description": "Native KWin 6 effect for adjusting desktop saturation on KDE Plasma 6, with Digital Vibrance Qt 6 controls.",
+    "url": "https://efedursun125.github.io/kwin-saturation/",
+    "codeRepository": "https://github.com/EfeDursun125/kwin-saturation",
+    "operatingSystem": "Linux",
+    "applicationCategory": "UtilitiesApplication",
+    "isAccessibleForFree": true,
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "author": {"@type": "Person", "name": "EfeDursun125", "url": "https://github.com/EfeDursun125"}
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      /* Dark palette built from the tones in kwin-saturation.svg. */
+      --window: #1c1e20;
+      --text: #e8e5df;
+      --base: #25292b;
+      --button: #303637;
+      --accent: #d99b64;
+      --accent-text: #1c1e20;
+      --alternate: #3d4139;
+      --bright-text: #dedbd2;
+      --muted: #b9bcb5;
+      --mid: #a0a69e;
+      --line: #414647;
+      font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
+    }
+    /* Light variants of the icon's graphite, cream, amber, and sage. */
+    :root[data-theme="white"] {
+      color-scheme: light;
+      --window: #f5f4f0;
+      --text: #1c1e20;
+      --base: #e9ebe6;
+      --button: #e1e4df;
+      --accent: #80502a;
+      --accent-text: #ffffff;
+      --alternate: #dce6de;
+      --bright-text: #284137;
+      --muted: #4e5752;
+      --mid: #66716b;
+      --line: #bdc6bf;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+    body { margin: 0; background: var(--window); color: var(--text); font-size: 14px; }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent); }
+    button { cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .container { width: min(1100px, calc(100% - 48px)); margin-inline: auto; }
+    .nav-wrap { border-bottom: 1px solid var(--line); }
+    .nav { min-height: 72px; display: flex; gap: 28px; align-items: center; }
+    .wordmark { display: flex; align-items: center; gap: 11px; font-size: 15px; font-weight: 650; margin-right: auto; }
+    .icon { width: 30px; height: 30px; display: block; flex: none; }
+    .nav-links { display: flex; gap: 27px; color: var(--muted); font-size: 13px; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-picker { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .theme-picker select { min-height: 39px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--button); color: var(--text); cursor: pointer; }
+    .theme-picker option { background: var(--window); color: var(--text); }
+    .btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 40px; padding: 9px 17px; background: var(--button); color: var(--text); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+    .btn:hover { background: color-mix(in srgb, var(--button) 85%, var(--text)); color: var(--text); border-color: var(--mid); }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+    .btn.primary:hover { background: color-mix(in srgb, var(--accent) 85%, var(--text)); border-color: var(--accent); color: var(--accent-text); }
+    .hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: 70px; padding-block: 94px 98px; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--accent); font-size: 12px; font-weight: 600; }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(41px, 5.2vw, 65px); line-height: 1.12; letter-spacing: -.045em; font-weight: 600; margin: 20px 0; }
+    h2 { font-size: 30px; font-weight: 600; letter-spacing: -.025em; line-height: 1.25; margin-bottom: 12px; }
+    h3 { font-size: 15px; font-weight: 600; margin-bottom: 7px; }
+    .hero-copy > p { color: var(--muted); max-width: 410px; line-height: 1.8; font-size: 15px; margin-bottom: 29px; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .hero-detail { color: var(--mid); line-height: 1.7; font-size: 12px; margin-top: 24px; }
+    .app-preview { border: 1px solid var(--line); border-radius: 12px; background: var(--window); overflow: hidden; box-shadow: 0 20px 55px rgba(0,0,0,.2); }
+    .app-titlebar { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--base); border-bottom: 1px solid var(--line); font-size: 12px; min-height: 46px; }
+    .app-titlebar .icon { height: 24px; width: 24px; }
+    .app-titlebar-name { flex: 1; font-weight: 550; }
+    .window-controls { display: flex; align-items: center; gap: 16px; color: var(--mid); font-size: 14px; }
+    .app-body { padding: 26px 28px 24px; }
+    .app-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .app-heading h2 { font-size: 24px; font-weight: 600; letter-spacing: 0; margin: 0 0 3px; }
+    .app-subtitle { margin: 0; color: var(--muted); font-size: 12px; }
+    .status { font-size: 12px; font-weight: 600; color: var(--accent); padding-top: 6px; }
+    .separator { border: 0; border-top: 1px solid var(--line); margin: 22px 0; }
+    .readout { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+    .percent { font-size: 56px; line-height: 1.08; font-weight: 500; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+    .multiplier { color: var(--muted); font-size: 12px; margin-top: 6px; }
+    .enable-toggle { display: flex; align-items: center; gap: 9px; white-space: nowrap; color: var(--text); font-size: 12px; cursor: pointer; }
+    .enable-toggle input { accent-color: var(--accent); width: 17px; height: 17px; margin: 0; cursor: pointer; }
+    .color-reference { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; width: 100%; height: 8px; margin: 24px 0 26px; }
+    .color-reference span:nth-child(1) { background: #d99b64; }
+    .color-reference span:nth-child(2) { background: #d8b56e; }
+    .color-reference span:nth-child(3) { background: #83b49c; }
+    .color-reference span:nth-child(4) { background: #839fbe; }
+    .color-reference span:nth-child(5) { background: #69716d; }
+    .color-reference span:nth-child(6) { background: #a0a69e; }
+    .color-reference span:nth-child(7) { background: #dedbd2; }
+    .slider-row { display: grid; grid-template-columns: 30px minmax(0,1fr) 30px; gap: 12px; align-items: center; }
+    .stepper { width: 30px; height: 30px; padding: 0; border-radius: 8px; border: 1px solid var(--line); color: var(--text); background: var(--button); font-size: 18px; line-height: 1; }
+    .stepper:hover, .preset:hover, .copy:hover { border-color: var(--mid); background: color-mix(in srgb, var(--button) 85%, var(--text)); }
+    .range { -webkit-appearance: none; appearance: none; height: 4px; width: 100%; border-radius: 2px; background: linear-gradient(to right, var(--accent) 0 var(--fill,50%), var(--line) var(--fill,50%) 100%); cursor: pointer; }
+    .range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border: 1px solid var(--window); border-radius: 50%; background: var(--accent); }
+    .range::-moz-range-thumb { width: 14px; height: 14px; border: 1px solid var(--window); border-radius: 50%; background: var(--accent); }
+    .scale { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; margin: 8px 43px 0; }
+    .presets-label { font-size: 13px; font-weight: 600; margin: 26px 0 10px; }
+    .presets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .preset { min-width: 0; border: 1px solid var(--line); background: var(--button); color: var(--text); border-radius: 8px; padding: 9px 5px; font-size: 12px; }
+    .preset[aria-pressed="true"] { color: var(--bright-text); background: var(--alternate); border-color: var(--accent); }
+    .app-footer { color: var(--muted); font-size: 12px; margin: 22px 0 0; }
+    .preview-caption { font-size: 11px; line-height: 1.6; color: var(--mid); margin: 10px 2px 0; }
+    .section { border-top: 1px solid var(--line); padding-block: 67px 72px; }
+    .section-intro { max-width: 570px; margin-bottom: 31px; }
+    .section-intro p { color: var(--muted); font-size: 14px; line-height: 1.8; margin: 0; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 34px; }
+    .feature { border-top: 1px solid var(--line); padding-top: 17px; }
+    .feature-number { color: var(--accent); font-size: 12px; font-weight: 600; margin-bottom: 14px; }
+    .feature p { color: var(--muted); font-size: 13px; line-height: 1.75; margin: 0; }
+    .install-layout { display: grid; grid-template-columns: .76fr 1.24fr; gap: 62px; }
+    .install-layout > div > p { color: var(--muted); line-height: 1.75; }
+    .steps { margin-top: 26px; display: grid; gap: 20px; }
+    .step strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    .step span { color: var(--muted); font-size: 13px; line-height: 1.65; }
+    .code-panel { border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--base); }
+    .code-heading { min-height: 43px; display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 13px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+    .copy { border: 1px solid var(--line); color: var(--text); background: var(--button); border-radius: 7px; padding: 5px 12px; font-size: 12px; min-width: 56px; }
+    pre { margin: 0; padding: 22px 19px; overflow: auto; font: 12px/2.1 ui-monospace, "Cascadia Code", "Consolas", monospace; color: var(--text); white-space: pre; }
+    .code-note { font-size: 12px; line-height: 1.7; color: var(--muted); padding: 13px 18px; border-top: 1px solid var(--line); }
+    .important { margin-top: 16px; border-left: 2px solid var(--accent); padding: 9px 13px; font-size: 12px; line-height: 1.75; color: var(--muted); }
+    .secondary-link { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .faq { max-width: 840px; }
+    .faq details { border-bottom: 1px solid var(--line); padding: 19px 0; }
+    .faq summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+    .faq details p { color: var(--muted); font-size: 13px; line-height: 1.8; margin: 12px 0 0; }
+    .footer { border-top: 1px solid var(--line); padding-block: 27px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--mid); font-size: 12px; }
+    .footer-links { display: flex; gap: 22px; }
+    .footer a { color: var(--muted); }
+    .footer a:hover { color: var(--accent); }
+    @media (max-width: 970px) {
+      .hero { grid-template-columns: 1fr; gap: 42px; padding-block: 66px; }
+      .hero-copy { max-width: 700px; }
+      .app-column { width: min(100%,560px); margin-inline: auto; }
+      .install-layout { grid-template-columns: 1fr; gap: 34px; }
+    }
+    @media (max-width: 650px) {
+      .container { width: calc(100% - 32px); }
+      .nav { min-height: 62px; gap: 12px; }
+      .nav-links { display: none; }
+      .nav-actions { gap: 8px; }
+      .theme-picker > label { display: none; }
+      .theme-picker select { max-width: 99px; }
+      .hero { padding-block: 48px 56px; }
+      h1 { font-size: 41px; }
+      h2 { font-size: 26px; }
+      .app-body { padding: 21px 17px; }
+      .app-heading h2 { font-size: 22px; }
+      .percent { font-size: 45px; }
+      .presets { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .preset { font-size: 11px; }
+      .section { padding-block: 49px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 23px; }
+      pre { font-size: 10px; padding: 15px 12px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <!-- The icon paths are the actual kwin-saturation.svg artwork from the repository. -->
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
+    <symbol id="kwin-icon" viewBox="0 0 256 256">
+      <rect x="16" y="16" width="224" height="224" rx="48" fill="#1c1e20"/>
+      <rect x="17" y="17" width="222" height="222" rx="47" stroke="#414647" stroke-width="2" fill="none"/>
+      <g fill="none" stroke-width="24">
+        <path d="M128 56a72 72 0 0 1 62.354 36" stroke="#d99b64"/>
+        <path d="M190.354 92a72 72 0 0 1 0 72" stroke="#83b49c"/>
+        <path d="M190.354 164A72 72 0 0 1 128 200" stroke="#839fbe"/>
+        <path d="M128 200a72 72 0 0 1-62.354-36" stroke="#69716d"/>
+        <path d="M65.646 164a72 72 0 0 1 0-72" stroke="#a0a69e"/>
+        <path d="M65.646 92A72 72 0 0 1 128 56" stroke="#dedbd2"/>
+      </g>
+      <path d="M92 128h72" stroke="#59635d" stroke-width="8" stroke-linecap="round"/>
+      <path d="M92 128h36" stroke="#d8b56e" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="128" cy="128" r="12" fill="#e8e5df" stroke="#1c1e20" stroke-width="4"/>
+    </symbol>
+  </svg>
+  <header class="nav-wrap">
+    <nav class="container nav" aria-label="Main">
+      <a class="wordmark" href="#top">
+        <svg class="icon" role="img" aria-label="KWin Saturation icon"><use href="#kwin-icon"/></svg>
+        <span>KWin Saturation</span>
+      </a>
+      <div class="nav-links"><a href="#features">Features</a><a href="#install">Install</a><a href="#faq">FAQ</a></div>
+      <div class="nav-actions">
+        <div class="theme-picker"><label for="site-theme">Theme</label><select id="site-theme" aria-label="Website color theme"><option value="dark">Dark</option><option value="white">White</option></select></div>
+        <a class="btn" href="https://github.com/EfeDursun125/kwin-saturation" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </nav>
+  </header>
+  <main id="top">
+    <section class="container hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow">KDE Plasma 6 · Wayland</div>
+        <h1 id="hero-title">Saturation control for KDE Plasma.</h1>
+        <p>KWin Saturation lets you adjust desktop colors from 0% (grayscale) to 250%. Set the value in Digital Vibrance, the Qt 6 control panel, or from the command line.</p>
+        <div class="hero-actions"><a href="#install" class="btn primary">Installation</a><a class="btn" href="https://github.com/EfeDursun125/kwin-saturation/blob/main/README.md" target="_blank" rel="noopener noreferrer">Documentation ↗</a></div>
+        <div class="hero-detail">KWin 6 · Qt 6 · GPL-3.0-or-later</div>
+      </div>
+      <div class="app-column">
+        <div class="app-preview" aria-label="Interactive demonstration of the Digital Vibrance Qt control panel">
+          <div class="app-titlebar">
+            <svg class="icon" role="img" aria-label="Project icon"><use href="#kwin-icon"/></svg>
+            <span class="app-titlebar-name">Digital Vibrance</span>
+            <span class="window-controls" aria-hidden="true">− &nbsp; ×</span>
+          </div>
+          <div class="app-body">
+            <div class="app-heading"><div><h2>Saturation</h2><p class="app-subtitle">KWin desktop effect</p></div><span class="status" id="status">Demo</span></div>
+            <hr class="separator">
+            <div class="readout">
+              <div><div class="percent" id="percent">125%</div><div class="multiplier" id="multiplier">1.25 × original saturation</div></div>
+              <label class="enable-toggle"><input id="enabled" type="checkbox" checked>Enable effect</label>
+            </div>
+            <div class="color-reference" id="color-reference" role="img" aria-label="Seven colors sampled from the KWin Saturation icon, reflecting the simulated saturation level"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="slider-row">
+              <button class="stepper" id="decrease" type="button" aria-label="Decrease saturation by 5%">−</button>
+              <input class="range" id="saturation" type="range" min="0" max="250" value="125" step="5" aria-label="Simulated desktop saturation">
+              <button class="stepper" id="increase" type="button" aria-label="Increase saturation by 5%">+</button>
+            </div>
+            <div class="scale"><span>0%</span><span>250%</span></div>
+            <div class="presets-label">Presets</div>
+            <div class="presets" aria-label="Saturation presets">
+              <button class="preset" type="button" data-value="0" aria-pressed="false">Grayscale · 0%</button>
+              <button class="preset" type="button" data-value="100" aria-pressed="false">Original · 100%</button>
+              <button class="preset" type="button" data-value="115" aria-pressed="false">Cinema · 115%</button>
+              <button class="preset" type="button" data-value="140" aria-pressed="false">Boost · 140%</button>
+              <button class="preset" type="button" data-value="175" aria-pressed="false">Vivid · 175%</button>
+              <button class="preset" type="button" data-value="200" aria-pressed="false">Strong · 200%</button>
+            </div>
+            <p class="app-footer">100% preserves the original colors.</p>
+          </div>
+        </div>
+        <p class="preview-caption">Interactive preview only. Changes here do not affect your desktop.</p>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-intro"><h2>How it works</h2><p>The plugin changes the saturation value of each window during KWin's paint pass. It uses the compositor's existing shader.</p></div>
+        <div class="feature-grid">
+          <article class="feature"><div class="feature-number">01</div><h3>No extra fullscreen pass</h3><p>The effect uses KWin's existing window compositing pipeline. There's no additional texture or custom GLSL shader.</p></article>
+          <article class="feature"><div class="feature-number">02</div><h3>Control panel and tray menu</h3><p>Set the value with a slider, choose one of six presets, or temporarily disable the effect. The tray menu has the same presets.</p></article>
+          <article class="feature"><div class="feature-number">03</div><h3>KDE theme support</h3><p>Digital Vibrance reads colors from KDE's configuration, including Matugen-exported schemes. When those aren't available, it uses Qt colors or its own fallback palette.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="container install-layout">
+        <div>
+          <h2>Installation</h2>
+          <p>The installation script supports Arch/CachyOS, Debian/Ubuntu derivatives, and Fedora. KDE Plasma 6 and matching KWin development packages are required.</p>
+          <div class="steps">
+            <div class="step"><strong>1. Clone the repository</strong><span>Download the source and open the project directory.</span></div>
+            <div class="step"><strong>2. Run the script</strong><span>It installs the build dependencies, compiles the effect, and installs the control panel.</span></div>
+            <div class="step"><strong>3. Log out and back in</strong><span>Open Digital Vibrance from the application menu. If necessary, enable Saturation Boost in Desktop Effects.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="code-panel">
+            <div class="code-heading"><span>Terminal</span><button class="copy" type="button" data-target="install-code">Copy</button></div>
+            <pre id="install-code">git clone https://github.com/EfeDursun125/kwin-saturation.git
+cd kwin-saturation
+./autoinstall.sh</pre>
+            <div class="code-note">Check the installation steps without making changes: <code>./autoinstall.sh --dry-run</code></div>
+          </div>
+          <div class="important">The installer requests sudo access. On Arch/CachyOS, it also performs a full system upgrade. Review the script before running it.</div>
+          <p style="margin:21px 0 0;font-size:13px;color:var(--muted);">Prefer to build manually? See <a class="secondary-link" href="https://github.com/EfeDursun125/kwin-saturation#manual-installation" target="_blank" rel="noopener noreferrer">manual installation instructions ↗</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container faq">
+        <h2>Questions</h2>
+        <details><summary>Does it support Wayland?</summary><p>Yes. KWin Saturation is a native KWin 6 effect and works with supported KDE Plasma 6 Wayland sessions.</p></details>
+        <details><summary>Does it work on Plasma 5?</summary><p>No. KDE Plasma 6 and compatible KWin 6 development packages are required.</p></details>
+        <details><summary>Does it add another shader pass?</summary><p>No. It uses KWin's existing compositing shader and updates the saturation value for each window during the paint pass. Performance varies with your GPU driver and workload.</p></details>
+        <details><summary>What if it stops working after a KWin update?</summary><p>Rebuild and reinstall against the updated KWin development packages, then log out and back in. See the <a class="secondary-link" href="https://github.com/EfeDursun125/kwin-saturation#troubleshooting" target="_blank" rel="noopener noreferrer">troubleshooting guide ↗</a>.</p></details>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner"><span>© 2026 EfeDursun125 · KWin Saturation</span><div class="footer-links"><a href="https://github.com/EfeDursun125/kwin-saturation" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/EfeDursun125/kwin-saturation/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0-or-later</a></div></div>
+  </footer>
+  <script>
+    const themeSelect = document.getElementById('site-theme');
+    const root = document.documentElement;
+    themeSelect.value = root.dataset.theme === 'white' ? 'white' : 'dark';
+    function setSiteTheme(value) {
+      root.dataset.theme = value === 'white' ? 'white' : 'dark';
+      document.querySelector('meta[name="theme-color"]').content = getComputedStyle(document.body).backgroundColor;
+    }
+    themeSelect.addEventListener('change', () => {
+      setSiteTheme(themeSelect.value);
+      try { localStorage.setItem('kwin-site-theme-v2', themeSelect.value); } catch {}
+    });
+    setSiteTheme(themeSelect.value);
+    const range = document.getElementById('saturation');
+    const enabled = document.getElementById('enabled');
+    const percent = document.getElementById('percent');
+    const multiplier = document.getElementById('multiplier');
+    const strip = document.getElementById('color-reference');
+    const presets = document.querySelectorAll('.preset');
+    function updatePreview() {
+      const value = Number(range.value);
+      percent.textContent = value + '%';
+      multiplier.textContent = enabled.checked ? (value / 100).toFixed(2) + ' × original saturation' : 'Effect paused · original colors';
+      range.style.setProperty('--fill', (value / 250 * 100) + '%');
+      strip.style.filter = 'saturate(' + (enabled.checked ? value / 100 : 1) + ')';
+      presets.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.value) === value)));
+    }
+    range.addEventListener('input', updatePreview);
+    enabled.addEventListener('change', updatePreview);
+    document.getElementById('decrease').addEventListener('click', () => { range.stepDown(); updatePreview(); });
+    document.getElementById('increase').addEventListener('click', () => { range.stepUp(); updatePreview(); });
+    presets.forEach(button => button.addEventListener('click', () => { range.value = button.dataset.value; updatePreview(); }));
+    updatePreview();
+    document.querySelectorAll('[data-target]').forEach(button => {
+      button.addEventListener('click', async () => {
+        const source = document.getElementById(button.dataset.target);
+        try {
+          await navigator.clipboard.writeText(source.textContent.trim());
+          button.textContent = 'Copied';
+          window.setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+        } catch {
+          button.textContent = 'Select text';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
