@@ -9,6 +9,7 @@ Usage: ./autoinstall.sh [--dry-run | --help]
 Install dependencies, build, and install KWin Saturation under /usr.
 Supported: Arch/CachyOS, Debian/Ubuntu, and Fedora with KDE Plasma 6.
 Run as your normal user; sudo is used only for system changes.
+On Arch/CachyOS, the installer asks before a full system update (default: yes).
 
   --dry-run  Print commands without changing the system.
   --help     Show this help.
@@ -88,11 +89,31 @@ if [[ "$dry_run" == true ]]; then
     printf 'Preview only; no commands will be executed.\n'
 fi
 
+# Arch-based distributions require full system upgrades to avoid unsupported
+# partial upgrades. Default to yes; accept n/N to install dependencies only.
+arch_full_upgrade=true
+if [[ "$family" == arch ]]; then
+    if [[ -t 0 ]]; then
+        read -r -p 'Run a full system update before installing dependencies? [Y/n] ' answer
+        case "$answer" in
+            n|N|no|NO|No) arch_full_upgrade=false ;;
+            '') ;;
+            *) arch_full_upgrade=true ;;
+        esac
+    else
+        printf 'No interactive terminal; defaulting to a full system update.\n'
+    fi
+fi
+
 case "$family" in
     arch)
-        # A full upgrade avoids unsupported partial upgrades on Arch systems.
-        run sudo pacman -Syu --needed base-devel cmake extra-cmake-modules \
-            kwin qt6-base qt6-svg qt6-tools kconfig vulkan-headers
+        if [[ "$arch_full_upgrade" == true ]]; then
+            run sudo pacman -Syu --needed base-devel cmake extra-cmake-modules \
+                kwin qt6-base qt6-svg qt6-tools kconfig vulkan-headers
+        else
+            run sudo pacman -S --needed base-devel cmake extra-cmake-modules \
+                kwin qt6-base qt6-svg qt6-tools kconfig vulkan-headers
+        fi
         ;;
     debian)
         run sudo apt-get update
