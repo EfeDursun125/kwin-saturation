@@ -1,16 +1,45 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1a1110">
-  <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Set desktop saturation from 0% to 250% in KDE Plasma 6. Includes a Qt control panel, presets and command-line control.">
-  <meta property="og:title" content="KWin Saturation">
-  <meta property="og:description" content="Change desktop saturation in KDE Plasma 6 using a KWin effect and Qt control panel.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="KWin Saturation adds digital vibrance and desktop saturation control to KDE Plasma 6 on Wayland. Free native KWin effect with Qt 6 controls and presets.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://efedursun125.github.io/kwin-saturation/">
+  <meta property="og:title" content="KWin Saturation | Digital Vibrance for KDE Plasma 6">
+  <meta property="og:description" content="Adjust KDE Plasma 6 desktop saturation from 0% to 250% with a native KWin effect and Qt 6 control panel.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://efedursun125.github.io/kwin-saturation/">
+  <meta property="og:site_name" content="KWin Saturation">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="KWin Saturation | KDE Plasma 6">
+  <meta name="twitter:description" content="Digital vibrance and saturation controls for KDE Plasma 6.">
   <link rel="icon" type="image/svg+xml" href="./kwin-saturation.svg">
-  <title>KWin Saturation · KDE Plasma 6</title>
+  <title>KWin Saturation | Digital Vibrance for KDE Plasma 6</title>
+  <script>
+    try {
+      if (localStorage.getItem('kwin-site-theme-v2') === 'white') {
+        document.documentElement.dataset.theme = 'white';
+      }
+    } catch {}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "KWin Saturation",
+    "description": "Native KWin 6 effect for adjusting desktop saturation on KDE Plasma 6, with Digital Vibrance Qt 6 controls.",
+    "url": "https://efedursun125.github.io/kwin-saturation/",
+    "codeRepository": "https://github.com/EfeDursun125/kwin-saturation",
+    "operatingSystem": "Linux",
+    "applicationCategory": "UtilitiesApplication",
+    "isAccessibleForFree": true,
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "author": {"@type": "Person", "name": "EfeDursun125", "url": "https://github.com/EfeDursun125"}
+  }
+  </script>
   <style>
     :root {
       color-scheme: dark;
@@ -27,20 +56,20 @@
       --line: #534340;
       font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
     }
-    /* Browsers expose their own system colors, not KDE's full kdeglobals palette. */
-    :root[data-theme="system"] {
-      color-scheme: light dark;
-      --window: Canvas;
-      --text: CanvasText;
-      --base: color-mix(in srgb, Canvas 93%, CanvasText 7%);
-      --button: ButtonFace;
-      --accent: AccentColor;
-      --accent-text: AccentColorText;
-      --alternate: color-mix(in srgb, AccentColor 21%, Canvas);
-      --bright-text: CanvasText;
-      --muted: color-mix(in srgb, CanvasText 80%, Canvas);
-      --mid: color-mix(in srgb, CanvasText 57%, Canvas);
-      --line: color-mix(in srgb, CanvasText 26%, Canvas);
+    /* Explicit palettes keep browser and operating-system accent colors from clashing. */
+    :root[data-theme="white"] {
+      color-scheme: light;
+      --window: #faf8f6;
+      --text: #352a27;
+      --base: #f0eae6;
+      --button: #eae1dd;
+      --accent: #9a4435;
+      --accent-text: #fff8f5;
+      --alternate: #f4dfd8;
+      --bright-text: #743629;
+      --muted: #655753;
+      --mid: #81716c;
+      --line: #d6c6bf;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 78px; }
@@ -196,7 +225,7 @@
       </a>
       <div class="nav-links"><a href="#features">Features</a><a href="#install">Install</a><a href="#faq">FAQ</a></div>
       <div class="nav-actions">
-        <div class="theme-picker"><label for="site-theme">Site theme</label><select id="site-theme" aria-label="Website color theme"><option value="system">System</option><option value="app">App colors</option></select></div>
+        <div class="theme-picker"><label for="site-theme">Theme</label><select id="site-theme" aria-label="Website color theme"><option value="dark">Dark</option><option value="white">White</option></select></div>
         <a class="btn" href="https://github.com/EfeDursun125/kwin-saturation" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
     </nav>
@@ -215,7 +244,7 @@
           <div class="app-titlebar">
             <svg class="icon" role="img" aria-label="Project icon"><use href="#kwin-icon"/></svg>
             <span class="app-titlebar-name">Digital Vibrance</span>
-            <span class="window-controls" aria-hidden="true">− &nbsp; □ &nbsp; ×</span>
+            <span class="window-controls" aria-hidden="true">− &nbsp; ×</span>
           </div>
           <div class="app-body">
             <div class="app-heading"><div><h2>Saturation</h2><p class="app-subtitle">KWin desktop effect</p></div><span class="status" id="status">Demo</span></div>
@@ -243,7 +272,7 @@
             <p class="app-footer">100% preserves the original colors.</p>
           </div>
         </div>
-        <p class="preview-caption">This panel is interactive, but it only changes the preview. The desktop app reads KDE colors; this website uses browser colors in System mode, or the app's fallback palette in App colors mode.</p>
+        <p class="preview-caption">Interactive preview only. Changes here do not affect your desktop.</p>
       </div>
     </section>
 
@@ -299,22 +328,16 @@ cd kwin-saturation
   <script>
     const themeSelect = document.getElementById('site-theme');
     const root = document.documentElement;
-    let savedTheme = 'system';
-    try { savedTheme = localStorage.getItem('kwin-site-theme') || 'system'; } catch {}
-    themeSelect.value = savedTheme === 'app' ? 'app' : 'system';
-    function setSiteTheme() {
-      root.dataset.theme = themeSelect.value;
-      const themeMeta = document.querySelector('meta[name="theme-color"]');
-      themeMeta.content = getComputedStyle(document.body).backgroundColor;
+    themeSelect.value = root.dataset.theme === 'white' ? 'white' : 'dark';
+    function setSiteTheme(value) {
+      root.dataset.theme = value === 'white' ? 'white' : 'dark';
+      document.querySelector('meta[name="theme-color"]').content = getComputedStyle(document.body).backgroundColor;
     }
     themeSelect.addEventListener('change', () => {
-      setSiteTheme();
-      try { localStorage.setItem('kwin-site-theme', themeSelect.value); } catch {}
+      setSiteTheme(themeSelect.value);
+      try { localStorage.setItem('kwin-site-theme-v2', themeSelect.value); } catch {}
     });
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-      if (themeSelect.value === 'system') setSiteTheme();
-    });
-    setSiteTheme();
+    setSiteTheme(themeSelect.value);
     const range = document.getElementById('saturation');
     const enabled = document.getElementById('enabled');
     const percent = document.getElementById('percent');
