@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1a1110">
-  <meta name="description" content="Control desktop saturation on KDE Plasma 6 with a native KWin effect and Qt 6 control panel.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Set desktop saturation from 0% to 250% in KDE Plasma 6. Includes a Qt control panel, presets and command-line control.">
   <meta property="og:title" content="KWin Saturation">
-  <meta property="og:description" content="Native saturation control for KDE Plasma 6.">
+  <meta property="og:description" content="Change desktop saturation in KDE Plasma 6 using a KWin effect and Qt control panel.">
   <meta property="og:type" content="website">
-  <link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/EfeDursun125/kwin-saturation/main/kwin-saturation.svg">
+  <link rel="icon" type="image/svg+xml" href="./kwin-saturation.svg">
   <title>KWin Saturation · KDE Plasma 6</title>
   <style>
     :root {
@@ -26,6 +27,21 @@
       --line: #534340;
       font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
     }
+    /* Browsers expose their own system colors, not KDE's full kdeglobals palette. */
+    :root[data-theme="system"] {
+      color-scheme: light dark;
+      --window: Canvas;
+      --text: CanvasText;
+      --base: color-mix(in srgb, Canvas 93%, CanvasText 7%);
+      --button: ButtonFace;
+      --accent: AccentColor;
+      --accent-text: AccentColorText;
+      --alternate: color-mix(in srgb, AccentColor 21%, Canvas);
+      --bright-text: CanvasText;
+      --muted: color-mix(in srgb, CanvasText 80%, Canvas);
+      --mid: color-mix(in srgb, CanvasText 57%, Canvas);
+      --line: color-mix(in srgb, CanvasText 26%, Canvas);
+    }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 78px; }
     body { margin: 0; background: var(--window); color: var(--text); font-size: 14px; }
@@ -41,11 +57,14 @@
     .wordmark { display: flex; align-items: center; gap: 11px; font-size: 15px; font-weight: 650; margin-right: auto; }
     .icon { width: 30px; height: 30px; display: block; flex: none; }
     .nav-links { display: flex; gap: 27px; color: var(--muted); font-size: 13px; }
-    .nav-actions { display: flex; align-items: center; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-picker { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .theme-picker select { min-height: 39px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--button); color: var(--text); cursor: pointer; }
+    .theme-picker option { background: var(--window); color: var(--text); }
     .btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 40px; padding: 9px 17px; background: var(--button); color: var(--text); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 600; white-space: nowrap; }
-    .btn:hover { background: #433531; color: var(--text); border-color: var(--mid); }
+    .btn:hover { background: color-mix(in srgb, var(--button) 85%, var(--text)); color: var(--text); border-color: var(--mid); }
     .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
-    .btn.primary:hover { background: #ffd3cb; border-color: #ffd3cb; color: var(--accent-text); }
+    .btn.primary:hover { background: color-mix(in srgb, var(--accent) 85%, var(--text)); border-color: var(--accent); color: var(--accent-text); }
     .hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: 70px; padding-block: 94px 98px; }
     .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--accent); font-size: 12px; font-weight: 600; }
     .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
@@ -56,7 +75,7 @@
     .hero-copy > p { color: var(--muted); max-width: 410px; line-height: 1.8; font-size: 15px; margin-bottom: 29px; }
     .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
     .hero-detail { color: var(--mid); line-height: 1.7; font-size: 12px; margin-top: 24px; }
-    .app-preview { border: 1px solid #66534e; border-radius: 12px; background: var(--window); overflow: hidden; box-shadow: 0 20px 55px rgba(0,0,0,.2); }
+    .app-preview { border: 1px solid var(--line); border-radius: 12px; background: var(--window); overflow: hidden; box-shadow: 0 20px 55px rgba(0,0,0,.2); }
     .app-titlebar { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--base); border-bottom: 1px solid var(--line); font-size: 12px; min-height: 46px; }
     .app-titlebar .icon { height: 24px; width: 24px; }
     .app-titlebar-name { flex: 1; font-weight: 550; }
@@ -82,7 +101,7 @@
     .color-reference span:nth-child(7) { background: #dedbd3; }
     .slider-row { display: grid; grid-template-columns: 30px minmax(0,1fr) 30px; gap: 12px; align-items: center; }
     .stepper { width: 30px; height: 30px; padding: 0; border-radius: 8px; border: 1px solid var(--line); color: var(--text); background: var(--button); font-size: 18px; line-height: 1; }
-    .stepper:hover, .preset:hover, .copy:hover { border-color: var(--mid); background: #413330; }
+    .stepper:hover, .preset:hover, .copy:hover { border-color: var(--mid); background: color-mix(in srgb, var(--button) 85%, var(--text)); }
     .range { -webkit-appearance: none; appearance: none; height: 4px; width: 100%; border-radius: 2px; background: linear-gradient(to right, var(--accent) 0 var(--fill,50%), var(--line) var(--fill,50%) 100%); cursor: pointer; }
     .range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border: 1px solid var(--window); border-radius: 50%; background: var(--accent); }
     .range::-moz-range-thumb { width: 14px; height: 14px; border: 1px solid var(--window); border-radius: 50%; background: var(--accent); }
@@ -131,6 +150,9 @@
       .container { width: calc(100% - 32px); }
       .nav { min-height: 62px; gap: 12px; }
       .nav-links { display: none; }
+      .nav-actions { gap: 8px; }
+      .theme-picker > label { display: none; }
+      .theme-picker select { max-width: 99px; }
       .hero { padding-block: 48px 56px; }
       h1 { font-size: 41px; }
       h2 { font-size: 26px; }
@@ -173,17 +195,20 @@
         <span>KWin Saturation</span>
       </a>
       <div class="nav-links"><a href="#features">Features</a><a href="#install">Install</a><a href="#faq">FAQ</a></div>
-      <div class="nav-actions"><a class="btn" href="https://github.com/EfeDursun125/kwin-saturation" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+      <div class="nav-actions">
+        <div class="theme-picker"><label for="site-theme">Site theme</label><select id="site-theme" aria-label="Website color theme"><option value="system">System</option><option value="app">App colors</option></select></div>
+        <a class="btn" href="https://github.com/EfeDursun125/kwin-saturation" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
     </nav>
   </header>
   <main id="top">
     <section class="container hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <div class="eyebrow">KDE Plasma 6 · KWin effect</div>
-        <h1 id="hero-title">Desktop saturation. Your settings.</h1>
-        <p>Adjust global color saturation directly through KWin, with live controls in a native Qt 6 application. Built for KDE Plasma 6, including Wayland.</p>
+        <div class="eyebrow">KDE Plasma 6 · Wayland</div>
+        <h1 id="hero-title">Saturation control for KDE Plasma.</h1>
+        <p>KWin Saturation lets you adjust desktop colors from 0% (grayscale) to 250%. Set the value in Digital Vibrance, the Qt 6 control panel, or from the command line.</p>
         <div class="hero-actions"><a href="#install" class="btn primary">Installation</a><a class="btn" href="https://github.com/EfeDursun125/kwin-saturation/blob/main/README.md" target="_blank" rel="noopener noreferrer">Documentation ↗</a></div>
-        <div class="hero-detail">C++20 · Qt 6 · KDE Frameworks 6 · GPL-3.0-or-later</div>
+        <div class="hero-detail">KWin 6 · Qt 6 · GPL-3.0-or-later</div>
       </div>
       <div class="app-column">
         <div class="app-preview" aria-label="Interactive demonstration of the Digital Vibrance Qt control panel">
@@ -193,7 +218,7 @@
             <span class="window-controls" aria-hidden="true">− &nbsp; □ &nbsp; ×</span>
           </div>
           <div class="app-body">
-            <div class="app-heading"><div><h2>Saturation</h2><p class="app-subtitle">KWin desktop effect</p></div><span class="status" id="status">Preview</span></div>
+            <div class="app-heading"><div><h2>Saturation</h2><p class="app-subtitle">KWin desktop effect</p></div><span class="status" id="status">Demo</span></div>
             <hr class="separator">
             <div class="readout">
               <div><div class="percent" id="percent">125%</div><div class="multiplier" id="multiplier">1.25 × original saturation</div></div>
@@ -218,17 +243,17 @@
             <p class="app-footer">100% preserves the original colors.</p>
           </div>
         </div>
-        <p class="preview-caption">Interactive website demo, not a connection to KWin. Colors match the application's built-in warm dark fallback palette; the installed app follows your KDE palette.</p>
+        <p class="preview-caption">This panel is interactive, but it only changes the preview. The desktop app reads KDE colors; this website uses browser colors in System mode, or the app's fallback palette in App colors mode.</p>
       </div>
     </section>
 
     <section class="section" id="features">
       <div class="container">
-        <div class="section-intro"><h2>Built into the compositor.</h2><p>A straightforward way to change desktop saturation without a separate fullscreen post-processing pass.</p></div>
+        <div class="section-intro"><h2>How it works</h2><p>The plugin changes the saturation value of each window during KWin's paint pass. It uses the compositor's existing shader.</p></div>
         <div class="feature-grid">
-          <article class="feature"><div class="feature-number">01 / KWin native</div><h3>Uses KWin's existing rendering path</h3><p>Adjusts window saturation during KWin's paint pass. No additional fullscreen render pass or custom GLSL shader.</p></article>
-          <article class="feature"><div class="feature-number">02 / Digital Vibrance</div><h3>Live Qt controls</h3><p>Change saturation from 0% to 250%, choose presets, pause the effect, or manage settings from the system tray.</p></article>
-          <article class="feature"><div class="feature-number">03 / Desktop integration</div><h3>Fits KDE Plasma</h3><p>Supports Plasma 6 Wayland and KWin-compatible GPUs. The application follows KDE color schemes, including Matugen-exported themes.</p></article>
+          <article class="feature"><div class="feature-number">01</div><h3>No extra fullscreen pass</h3><p>The effect uses KWin's existing window compositing pipeline. There's no additional texture or custom GLSL shader.</p></article>
+          <article class="feature"><div class="feature-number">02</div><h3>Control panel and tray menu</h3><p>Set the value with a slider, choose one of six presets, or temporarily disable the effect. The tray menu has the same presets.</p></article>
+          <article class="feature"><div class="feature-number">03</div><h3>KDE theme support</h3><p>Digital Vibrance reads colors from KDE's configuration, including Matugen-exported schemes. When those aren't available, it uses Qt colors or its own fallback palette.</p></article>
         </div>
       </div>
     </section>
@@ -237,16 +262,16 @@
       <div class="container install-layout">
         <div>
           <h2>Installation</h2>
-          <p>Clone the repository and run the installer on Arch/CachyOS, supported Debian/Ubuntu derivatives, or Fedora with Plasma 6.</p>
+          <p>The installation script supports Arch/CachyOS, Debian/Ubuntu derivatives, and Fedora. KDE Plasma 6 and matching KWin development packages are required.</p>
           <div class="steps">
-            <div class="step"><strong>1. Download the source</strong><span>Clone KWin Saturation from GitHub.</span></div>
-            <div class="step"><strong>2. Build and install</strong><span>The installer resolves dependencies, builds a release version, and installs the effect and GUI.</span></div>
-            <div class="step"><strong>3. Restart your session</strong><span>Log out and back in. Open Digital Vibrance from the application menu and enable Saturation Boost in Desktop Effects if required.</span></div>
+            <div class="step"><strong>1. Clone the repository</strong><span>Download the source and open the project directory.</span></div>
+            <div class="step"><strong>2. Run the script</strong><span>It installs the build dependencies, compiles the effect, and installs the control panel.</span></div>
+            <div class="step"><strong>3. Log out and back in</strong><span>Open Digital Vibrance from the application menu. If necessary, enable Saturation Boost in Desktop Effects.</span></div>
           </div>
         </div>
         <div>
           <div class="code-panel">
-            <div class="code-heading"><span>Terminal · Quick install</span><button class="copy" type="button" data-target="install-code">Copy</button></div>
+            <div class="code-heading"><span>Terminal</span><button class="copy" type="button" data-target="install-code">Copy</button></div>
             <pre id="install-code">git clone https://github.com/EfeDursun125/kwin-saturation.git
 cd kwin-saturation
 ./autoinstall.sh</pre>
@@ -260,7 +285,7 @@ cd kwin-saturation
 
     <section class="section" id="faq">
       <div class="container faq">
-        <h2>Details & troubleshooting</h2>
+        <h2>Questions</h2>
         <details><summary>Does it support Wayland?</summary><p>Yes. KWin Saturation is a native KWin 6 effect and works with supported KDE Plasma 6 Wayland sessions.</p></details>
         <details><summary>Does it work on Plasma 5?</summary><p>No. KDE Plasma 6 and compatible KWin 6 development packages are required.</p></details>
         <details><summary>Does it add another shader pass?</summary><p>No. It uses KWin's existing compositing shader and updates the saturation value for each window during the paint pass. Performance varies with your GPU driver and workload.</p></details>
@@ -272,6 +297,24 @@ cd kwin-saturation
     <div class="container footer-inner"><span>© 2026 EfeDursun125 · KWin Saturation</span><div class="footer-links"><a href="https://github.com/EfeDursun125/kwin-saturation" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/EfeDursun125/kwin-saturation/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0-or-later</a></div></div>
   </footer>
   <script>
+    const themeSelect = document.getElementById('site-theme');
+    const root = document.documentElement;
+    let savedTheme = 'system';
+    try { savedTheme = localStorage.getItem('kwin-site-theme') || 'system'; } catch {}
+    themeSelect.value = savedTheme === 'app' ? 'app' : 'system';
+    function setSiteTheme() {
+      root.dataset.theme = themeSelect.value;
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      themeMeta.content = getComputedStyle(document.body).backgroundColor;
+    }
+    themeSelect.addEventListener('change', () => {
+      setSiteTheme();
+      try { localStorage.setItem('kwin-site-theme', themeSelect.value); } catch {}
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (themeSelect.value === 'system') setSiteTheme();
+    });
+    setSiteTheme();
     const range = document.getElementById('saturation');
     const enabled = document.getElementById('enabled');
     const percent = document.getElementById('percent');
