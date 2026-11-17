@@ -43,33 +43,34 @@
   <style>
     :root {
       color-scheme: dark;
-      --window: #1a1110;
-      --text: #f1dfdc;
-      --base: #271d1c;
-      --button: #322826;
-      --accent: #ffb4a8;
-      --accent-text: #561e16;
-      --alternate: #73342b;
-      --bright-text: #ffdad4;
-      --muted: #d8c2be;
-      --mid: #a08c89;
-      --line: #534340;
+      /* Dark palette built from the tones in kwin-saturation.svg. */
+      --window: #1c1e20;
+      --text: #e8e5df;
+      --base: #25292b;
+      --button: #303637;
+      --accent: #d99b64;
+      --accent-text: #1c1e20;
+      --alternate: #3d4139;
+      --bright-text: #dedbd2;
+      --muted: #b9bcb5;
+      --mid: #a0a69e;
+      --line: #414647;
       font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
     }
-    /* Explicit palettes keep browser and operating-system accent colors from clashing. */
+    /* Light variants of the icon's graphite, cream, amber, and sage. */
     :root[data-theme="white"] {
       color-scheme: light;
-      --window: #faf8f6;
-      --text: #352a27;
-      --base: #f0eae6;
-      --button: #eae1dd;
-      --accent: #9a4435;
-      --accent-text: #fff8f5;
-      --alternate: #f4dfd8;
-      --bright-text: #743629;
-      --muted: #655753;
-      --mid: #81716c;
-      --line: #d6c6bf;
+      --window: #f5f4f0;
+      --text: #1c1e20;
+      --base: #e9ebe6;
+      --button: #e1e4df;
+      --accent: #80502a;
+      --accent-text: #ffffff;
+      --alternate: #dce6de;
+      --bright-text: #284137;
+      --muted: #4e5752;
+      --mid: #66716b;
+      --line: #bdc6bf;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 78px; }
@@ -121,13 +122,13 @@
     .enable-toggle { display: flex; align-items: center; gap: 9px; white-space: nowrap; color: var(--text); font-size: 12px; cursor: pointer; }
     .enable-toggle input { accent-color: var(--accent); width: 17px; height: 17px; margin: 0; cursor: pointer; }
     .color-reference { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; width: 100%; height: 8px; margin: 24px 0 26px; }
-    .color-reference span:nth-child(1) { background: #cb6e65; }
-    .color-reference span:nth-child(2) { background: #d5ae62; }
-    .color-reference span:nth-child(3) { background: #a9ba79; }
-    .color-reference span:nth-child(4) { background: #77b5a6; }
-    .color-reference span:nth-child(5) { background: #779dbb; }
-    .color-reference span:nth-child(6) { background: #a38db6; }
-    .color-reference span:nth-child(7) { background: #dedbd3; }
+    .color-reference span:nth-child(1) { background: #d99b64; }
+    .color-reference span:nth-child(2) { background: #d8b56e; }
+    .color-reference span:nth-child(3) { background: #83b49c; }
+    .color-reference span:nth-child(4) { background: #839fbe; }
+    .color-reference span:nth-child(5) { background: #69716d; }
+    .color-reference span:nth-child(6) { background: #a0a69e; }
+    .color-reference span:nth-child(7) { background: #dedbd2; }
     .slider-row { display: grid; grid-template-columns: 30px minmax(0,1fr) 30px; gap: 12px; align-items: center; }
     .stepper { width: 30px; height: 30px; padding: 0; border-radius: 8px; border: 1px solid var(--line); color: var(--text); background: var(--button); font-size: 18px; line-height: 1; }
     .stepper:hover, .preset:hover, .copy:hover { border-color: var(--mid); background: color-mix(in srgb, var(--button) 85%, var(--text)); }
@@ -253,7 +254,7 @@
               <div><div class="percent" id="percent">125%</div><div class="multiplier" id="multiplier">1.25 × original saturation</div></div>
               <label class="enable-toggle"><input id="enabled" type="checkbox" checked>Enable effect</label>
             </div>
-            <div class="color-reference" id="color-reference" role="img" aria-label="Seven reference colors reflecting the simulated saturation level"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="color-reference" id="color-reference" role="img" aria-label="Seven colors sampled from the KWin Saturation icon, reflecting the simulated saturation level"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
             <div class="slider-row">
               <button class="stepper" id="decrease" type="button" aria-label="Decrease saturation by 5%">−</button>
               <input class="range" id="saturation" type="range" min="0" max="250" value="125" step="5" aria-label="Simulated desktop saturation">
