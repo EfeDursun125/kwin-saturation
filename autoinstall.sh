@@ -39,8 +39,31 @@ run() {
 trap 'printf "Installation stopped at line %s. Fix the error above and rerun the installer.\n" "$LINENO" >&2' ERR
 
 source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-build_dir="$source_dir/build-autoinstall"
 [[ -f "$source_dir/CMakeLists.txt" ]] || die 'Keep this script in the project source directory.'
+
+# Keep the entire source path shell/CMake-friendly. Some generated build rules
+# do not handle spaces and punctuation reliably, so ask before doing any work.
+if [[ "$source_dir" =~ [^A-Za-z0-9_./+-] ]]; then
+    source_name=${source_dir##*/}
+    suggested_name=$(printf '%s' "$source_name" | LC_ALL=C sed -E \
+        's/[[:space:]]+/-/g; s/[()]//g; s/[^A-Za-z0-9_.+-]+/-/g; s/-+/-/g; s/^-+|-+$//g')
+    [[ -n "$suggested_name" ]] || suggested_name=kwin-saturation
+
+    printf '\nWarning: the project path contains spaces or special characters:\n  %s\n' "$source_dir" >&2
+    printf 'This may cause build errors. Consider renaming the project folder to: %s\n' "$suggested_name" >&2
+    printf 'The parent directory names should also avoid spaces and special characters.\n' >&2
+    if [[ -t 0 ]]; then
+        read -r -p 'Continue anyway? [y/N] ' path_answer
+        case "$path_answer" in
+            y|Y|yes|YES|Yes) ;;
+            *) die 'Stopped. Rename or move the project to a simple path, then rerun the installer.' ;;
+        esac
+    else
+        die 'No interactive terminal; not continuing with a path that may cause build errors.'
+    fi
+fi
+
+build_dir="$source_dir/build-autoinstall"
 
 # Update from the configured upstream branch when Git and the remote are available.
 # --ff-only prevents an automatic merge if the local branch has diverged.
