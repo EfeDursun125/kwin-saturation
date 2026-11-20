@@ -4,8 +4,8 @@
 # Usage: kwin-saturation <value>   (e.g. 1.25)
 #   value 1.0 = neutral, >1 = more vibrant, <1 = desaturated
 #
-# Writes the value into kwinrc and asks KWin to reconfigure only this effect,
-# so the change applies immediately without restarting the compositor.
+# Writes the value into kwinrc, enables the plugin if necessary, and asks
+# KWin to reconfigure without restarting the compositor.
 set -euo pipefail
 
 VALUE="${1:-}"
@@ -13,6 +13,11 @@ if [[ -z "$VALUE" ]]; then
 	CURRENT=$(kreadconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" --default "1.0")
 	echo "current saturation: $CURRENT"
 	echo "usage: kwin-saturation <value> (e.g. 1.25)" >&2
+	exit 1
+fi
+
+if [[ $# -ne 1 || ! "$VALUE" =~ ^[0-9]+([.][0-9]+)?$ ]] || ! LC_ALL=C awk -v value="$VALUE" 'BEGIN {exit !(value >= 0 && value <= 2.5)}'; then
+	echo "Error: saturation must be a number between 0.0 and 2.5." >&2
 	exit 1
 fi
 
@@ -30,5 +35,7 @@ fi
 
 kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Enabled" "true"
 kwriteconfig6 --file kwinrc --group "Effect-saturationeffect" --key "Saturation" "$VALUE"
+kwriteconfig6 --file kwinrc --group "Plugins" --key "saturationeffectEnabled" "true"
+"$QDBUS" org.kde.KWin /KWin org.kde.KWin.reconfigure
 "$QDBUS" org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect saturationeffect
 echo "saturation set to $VALUE"
