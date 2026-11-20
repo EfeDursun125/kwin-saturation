@@ -1,6 +1,6 @@
 pkgname=kwin-saturation
 pkgver=1.0.0
-pkgrel=2
+pkgrel=3
 pkgdesc="KWin saturation boost effect for KDE Plasma 6"
 arch=('x86_64')
 url="https://github.com/EfeDursun125/kwin-saturation"
@@ -23,7 +23,7 @@ makedepends=(
     'vulkan-headers'
 )
 
-_commit=a65e2f92acea6a6dee082850e6e9a746210369b0
+_commit=c920a60233d7a4a80dd3f6dfe6d59441b6fdbcb7
 source=("$pkgname::git+$url.git#commit=$_commit")
 sha256sums=('SKIP')
 conflicts=('kwin-saturation-git')
