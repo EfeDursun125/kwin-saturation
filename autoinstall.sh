@@ -46,7 +46,8 @@ source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 if [[ "$source_dir" =~ [^A-Za-z0-9_./+-] ]]; then
     source_name=${source_dir##*/}
     suggested_name=$(printf '%s' "$source_name" | LC_ALL=C sed -E \
-        's/[[:space:]]+/-/g; s/[()]//g; s/[^A-Za-z0-9_.+-]+/-/g; s/-+/-/g; s/^-+|-+$//g')
+        -e 's/Ç/C/g; s/ç/c/g; s/Ğ/G/g; s/ğ/g/g; s/İ/I/g; s/ı/i/g; s/Ö/O/g; s/ö/o/g; s/Ş/S/g; s/ş/s/g; s/Ü/U/g; s/ü/u/g' \
+        -e 's/[[:space:]]+/-/g; s/[()]//g; s/[^A-Za-z0-9_.+-]+/-/g; s/-+/-/g; s/^-+|-+$//g')
     [[ -n "$suggested_name" ]] || suggested_name=kwin-saturation
 
     printf '\nWarning: the project path contains spaces or special characters:\n  %s\n' "$source_dir" >&2
