@@ -45,14 +45,21 @@ source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 # do not handle spaces and punctuation reliably, so ask before doing any work.
 if [[ "$source_dir" =~ [^A-Za-z0-9_./+-] ]]; then
     source_name=${source_dir##*/}
-    suggested_name=$(printf '%s' "$source_name" | LC_ALL=C sed -E \
-        -e 's/Ç/C/g; s/ç/c/g; s/Ğ/G/g; s/ğ/g/g; s/İ/I/g; s/ı/i/g; s/Ö/O/g; s/ö/o/g; s/Ş/S/g; s/ş/s/g; s/Ü/U/g; s/ü/u/g' \
-        -e 's/[[:space:]]+/-/g; s/[()]//g; s/[^A-Za-z0-9_.+-]+/-/g; s/-+/-/g; s/^-+|-+$//g')
-    [[ -n "$suggested_name" ]] || suggested_name=kwin-saturation
-
+    parent_dir=${source_dir%/*}
     printf '\nWarning: the project path contains spaces or special characters:\n  %s\n' "$source_dir" >&2
-    printf 'This may cause build errors. Consider renaming the project folder to: %s\n' "$suggested_name" >&2
-    printf 'The parent directory names should also avoid spaces and special characters.\n' >&2
+    printf 'This may cause build errors.\n' >&2
+    if [[ "$source_name" =~ [^A-Za-z0-9_.+-] ]]; then
+        suggested_name=$(printf '%s' "$source_name" | LC_ALL=C sed -E \
+            -e 's/Ç/C/g; s/ç/c/g; s/Ğ/G/g; s/ğ/g/g; s/İ/I/g; s/ı/i/g; s/Ö/O/g; s/ö/o/g; s/Ş/S/g; s/ş/s/g; s/Ü/U/g; s/ü/u/g' \
+            -e 's/[[:space:]]+/-/g; s/[()]//g; s/[^A-Za-z0-9_.+-]+/-/g; s/-+/-/g; s/^-+|-+$//g')
+        [[ -n "$suggested_name" ]] || suggested_name=kwin-saturation
+        printf 'Consider renaming the project folder to: %s\n' "$suggested_name" >&2
+    else
+        printf 'The project folder name is already safe; the issue is in a parent directory.\n' >&2
+    fi
+    if [[ "$parent_dir" =~ [^A-Za-z0-9_./+-] ]]; then
+        printf 'One or more parent directories also have unsafe names; move the project to a simple path.\n' >&2
+    fi
     if [[ -t 0 ]]; then
         read -r -p 'Continue anyway? [y/N] ' path_answer
         case "$path_answer" in
