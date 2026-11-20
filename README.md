@@ -44,6 +44,7 @@ cd kwin-saturation
 Run the installer as your normal desktop user:
 
 ```bash
+chmod +x autoinstall.sh
 ./autoinstall.sh
 ```
 
@@ -59,6 +60,7 @@ Enable **Saturation Boost** in **System Settings → Desktop Effects** if needed
 To preview the commands without installing anything:
 
 ```bash
+chmod +x autoinstall.sh
 ./autoinstall.sh --dry-run
 ```
 
