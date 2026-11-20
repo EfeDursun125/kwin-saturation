@@ -1,5 +1,6 @@
 # Build artifacts
 build/
+build-autoinstall/
 cmake-build-*/
 
 # Editor / OS noise
