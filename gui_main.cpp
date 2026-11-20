@@ -9,6 +9,7 @@
 #include <QLocalSocket>
 #include <new>
 #include <iostream>
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {
@@ -17,24 +18,36 @@ int main(int argc, char *argv[])
 	app.setDesktopFileName(QStringLiteral("kwin-saturation-gui"));
 	app.setQuitOnLastWindowClosed(false);
 
-	const QString serverName = QStringLiteral("kwin-saturation-gui-instance-") + QString::fromLocal8Bit(qgetenv("USER"));
+	const QString serverName = QStringLiteral("kwin-saturation-gui-instance-") + QString::number(getuid());
 
-	QLocalSocket socket;
-	socket.connectToServer(serverName);
-	if (socket.waitForConnected(300))
+	const auto showExistingInstance = [&serverName]()
 	{
+		QLocalSocket socket;
+		socket.connectToServer(serverName);
+		if (!socket.waitForConnected(300))
+			return false;
+
 		socket.write("SHOW\n");
 		socket.waitForBytesWritten(300);
 		socket.disconnectFromServer();
+		return true;
+	};
+	if (showExistingInstance())
 		return 0;
-	}
 
-	QLocalServer::removeServer(serverName);
 	auto *localServer = new(std::nothrow) QLocalServer(&app);
 	if (!localServer)
 		std::cerr << "Warning: Failed to allocate QLocalServer. Running without single-instance socket." << std::endl;
-	else
-		localServer->listen(serverName);
+	else if (!localServer->listen(serverName))
+	{
+		if (showExistingInstance())
+			return 0;
+
+		// A live instance may own this socket, so do not remove it.
+		std::cerr << "Warning: Single-instance socket unavailable. Running without it." << std::endl;
+		localServer->deleteLater();
+		localServer = nullptr;
+	}
 
 	DigitalVibranceWindow window;
 	window.showNormal();
